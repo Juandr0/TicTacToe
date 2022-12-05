@@ -9,10 +9,9 @@ import Foundation
 import UIKit
 
 class Game {
-    var xPlayerTurn = true
-    var placeX = "X"
-    var placeO = "O"
+    var gameButtonsList = [UIButton]()
     
+
     var player1 : String
     var player2 : String
     
@@ -22,27 +21,35 @@ class Game {
     }
     
     func startGame (buttonsList : [UIButton]){
-         
+        gameButtonsList = buttonsList
     }
     
     func resetGame (){
         
     }
     
-    func buttonPressed(_ sender: UIButton){
-
-
-        
+    //Checks what player turn it is and displays the X//O according to the playerturn.
+    //If the button title is not nil it will only check if the game is over
+    
+    func buttonPressed(_ sender: UIButton, xPlayerTurn : Bool, placeX : String, placeO : String){
         
         if (sender.title(for: .normal) == nil){
-
             if xPlayerTurn == true {
                 sender.setTitle(placeX, for: .normal)
+
             } else {
                 sender.setTitle(placeO, for: .normal)
             }
-            xPlayerTurn = !xPlayerTurn
+            
         }
-
+        checkIfGameIsOver()
+    }
+    
+    
+    
+    func checkIfGameIsOver() {
+        for button in gameButtonsList {
+            
+        }
     }
 }

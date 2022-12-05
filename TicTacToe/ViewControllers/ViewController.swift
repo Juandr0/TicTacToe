@@ -9,8 +9,10 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    //Label that displays whos turn it is
     @IBOutlet weak var playerTurnLabelOutlet: UILabel!
     
+    //Game buttons
     @IBOutlet weak var a1Btn: UIButton!
     @IBOutlet weak var a2Btn: UIButton!
     @IBOutlet weak var a3Btn: UIButton!
@@ -23,18 +25,29 @@ class ViewController: UIViewController {
     @IBOutlet weak var c2Btn: UIButton!
     @IBOutlet weak var c3Btn: UIButton!
     
-    
+    //Initiates the game from class "Game"
     let TicTacToe = Game(player1: "Player 1", player2: "Player2")
-    var buttonsList = [UIButton]()
     
+    
+    var buttonsList = [UIButton]()
+    var xPlayerTurn = true
+    
+    enum playerTurn {
+        case X
+        case O
+    }
+    
+    var placeX = "X"
+    var placeO = "O"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         initGameButtons()
+
         TicTacToe.startGame(buttonsList: buttonsList)
     }
 
-
+    //Adds the buttons to a list
     func initGameButtons(){
         buttonsList.append(a1Btn)
         buttonsList.append(a2Btn)
@@ -49,8 +62,19 @@ class ViewController: UIViewController {
         buttonsList.append(c3Btn)
     }
     
+    //Changes playerturn label on buttonclick
+    //and runs the Game-class finction buttonPressed, that will handle the logic
     @IBAction func anyButtonPressed(_ sender: UIButton) {
-        TicTacToe.buttonPressed(sender)
+        if (sender.title(for: .normal) == nil){
+            displayPlayerTurn()
+        }
+        TicTacToe.buttonPressed(sender, xPlayerTurn: xPlayerTurn, placeX : placeX, placeO : placeO)
+        xPlayerTurn = !xPlayerTurn
+    }
+    
+    func displayPlayerTurn(){
+        if xPlayerTurn {playerTurnLabelOutlet.text = placeO}
+        else           {playerTurnLabelOutlet.text = placeX}
     }
     
 }
