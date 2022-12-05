@@ -31,19 +31,13 @@ class ViewController: UIViewController {
     
     var buttonsList = [UIButton]()
     var xPlayerTurn = true
-    
-    enum playerTurn {
-        case X
-        case O
-    }
-    
+
     var placeX = "X"
     var placeO = "O"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         initGameButtons()
-
         TicTacToe.startGame(buttonsList: buttonsList)
     }
 
@@ -68,7 +62,11 @@ class ViewController: UIViewController {
         if (sender.title(for: .normal) == nil){
             displayPlayerTurn()
         }
-        TicTacToe.buttonPressed(sender, xPlayerTurn: xPlayerTurn, placeX : placeX, placeO : placeO)
+        
+        TicTacToe.buttonPressed(sender, xPlayerTurn:xPlayerTurn,
+                                placeX :placeX,
+                                placeO : placeO)
+        
         xPlayerTurn = !xPlayerTurn
     }
     
