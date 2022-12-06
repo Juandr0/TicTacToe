@@ -33,18 +33,8 @@ class Game {
     //disable the current buttom so that the players cannot clicked already filled
     //buttons
     
-    func buttonPressed(_ sender: UIButton, xPlayerTurn : Bool, placeX : String, placeO : String){
-        
-        if (sender.title(for: .normal) == nil){
-            if xPlayerTurn == true {
-                sender.setTitle(placeX, for: .normal)
-                
-            } else {
-                sender.setTitle(placeO, for: .normal)
-            }
-        }
-        sender.isEnabled = false
-        sender.setTitleColor(UIColor.white, for: .disabled)
+    func buttonPressed(_ sender: UIButton, xPlayerTurn : Bool) {
+    
         
         if checkForWin(xPlayerTurn: xPlayerTurn) {
             

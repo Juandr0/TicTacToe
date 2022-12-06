@@ -61,12 +61,16 @@ class ViewController: UIViewController {
     @IBAction func anyButtonPressed(_ sender: UIButton) {
         if (sender.title(for: .normal) == nil){
             displayPlayerTurn()
-        }
+            if xPlayerTurn == true {
+                    sender.setTitle(placeX, for: .normal)
+                } else {
+                    sender.setTitle(placeO, for: .normal)
+                }
+            }
+            sender.isEnabled = false
+            sender.setTitleColor(UIColor.white, for: .disabled)
         
-        TicTacToe.buttonPressed(sender, xPlayerTurn:xPlayerTurn,
-                                placeX :placeX,
-                                placeO : placeO)
-        
+        TicTacToe.buttonPressed(sender, xPlayerTurn:xPlayerTurn)
         xPlayerTurn = !xPlayerTurn
     }
     
