@@ -157,6 +157,33 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Player 1: 0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9ax-S6-APp">
+                                <rect key="frame" x="16" y="706.33333333333337" width="89.333333333333329" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="5jJ-Ht-E7D"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Player 2: 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6PI-PB-vzw">
+                                <rect key="frame" x="16" y="732.33333333333337" width="92" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="cc9-r6-86k"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JAI-vr-4w9">
+                                <rect key="frame" x="26" y="675.33333333333337" width="51" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="Sk2-ai-6rz"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -167,10 +194,16 @@
                             <constraint firstItem="wgn-zH-qja" firstAttribute="top" secondItem="KLn-Hf-x8G" secondAttribute="bottom" constant="15" id="7Xc-m7-cYb"/>
                             <constraint firstItem="KLn-Hf-x8G" firstAttribute="centerX" secondItem="wgn-zH-qja" secondAttribute="centerX" id="D3U-BJ-3ld"/>
                             <constraint firstItem="3E3-w7-qnx" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="DSl-7d-1wF"/>
+                            <constraint firstItem="6PI-PB-vzw" firstAttribute="top" secondItem="9ax-S6-APp" secondAttribute="bottom" constant="5" id="DqN-uA-ce6"/>
                             <constraint firstItem="uQT-vr-HFE" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="L6t-SH-cdF"/>
                             <constraint firstItem="3E3-w7-qnx" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="Odx-ct-P1K"/>
+                            <constraint firstItem="6PI-PB-vzw" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="Rkl-LB-SJd"/>
+                            <constraint firstItem="JAI-vr-4w9" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="26" id="SHT-KO-jHo"/>
+                            <constraint firstItem="JAI-vr-4w9" firstAttribute="top" secondItem="3E3-w7-qnx" secondAttribute="bottom" constant="50" id="bnx-93-IR2"/>
+                            <constraint firstItem="9ax-S6-APp" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="c7C-AP-mQd"/>
                             <constraint firstItem="uQT-vr-HFE" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="dyh-uW-FPV"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="wgn-zH-qja" secondAttribute="trailing" constant="177" id="msy-BI-u7F"/>
+                            <constraint firstItem="9ax-S6-APp" firstAttribute="top" secondItem="JAI-vr-4w9" secondAttribute="bottom" constant="10" id="qh1-Ou-YeO"/>
                             <constraint firstItem="KLn-Hf-x8G" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="qoM-zT-Gwp"/>
                             <constraint firstItem="KLn-Hf-x8G" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="30" id="rO9-6I-2DW"/>
                             <constraint firstItem="KLn-Hf-x8G" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="147.66666666666666" id="yOm-xO-kIe"/>
@@ -186,7 +219,10 @@
                         <outlet property="c1Btn" destination="qpR-Zv-pag" id="GpN-g0-b0C"/>
                         <outlet property="c2Btn" destination="QeT-no-6iC" id="BzL-LJ-vvG"/>
                         <outlet property="c3Btn" destination="tPA-IP-ckH" id="rZA-Pi-QPS"/>
-                        <outlet property="playerTurnLabelOutlet" destination="wgn-zH-qja" id="jhH-xP-mc3"/>
+                        <outlet property="playerOneScoreLabelOutlet" destination="9ax-S6-APp" id="HCR-eQ-9Re"/>
+                        <outlet property="playerTurnLabelOutlet" destination="KLn-Hf-x8G" id="hR4-Xu-mPK"/>
+                        <outlet property="playerTurnSymbolLabelOutlet" destination="wgn-zH-qja" id="nyX-j2-3CD"/>
+                        <outlet property="playerTwoScoreLabelOutlet" destination="6PI-PB-vzw" id="qfS-Lg-9WK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
