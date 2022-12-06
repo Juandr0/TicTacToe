@@ -9,23 +9,35 @@ import Foundation
 import UIKit
 
 class Game {
-    var gameButtonsList = [UIButton]()
+    var coordinatesList = [String]()
+    var xPlayerTurn = true
+    let placeX = "X"
+    let placeO = "O"
     
-    
-    var player1 : String
-    var player2 : String
-    
-    init(player1 : String, player2 : String){
-        self.player1 = player1
-        self.player2 = player2
+    init() {
+        startGame()
     }
     
-    func startGame (buttonsList : [UIButton]){
-        gameButtonsList = buttonsList
+    func startGame (){
+        coordinatesList.append("empty")
+        coordinatesList.append("empty")
+        coordinatesList.append("empty")
+        
+        coordinatesList.append("empty")
+        coordinatesList.append("empty")
+        coordinatesList.append("empty")
+        
+        coordinatesList.append("empty")
+        coordinatesList.append("empty")
+        coordinatesList.append("empty")
+    }
+    
+    func fetchXPlayerTurn() -> Bool {
+        return xPlayerTurn
     }
     
     func resetGame (){
-        
+        startGame()
     }
     
     //Checks what player turn it is and displays the X/O according to the playerturn.
@@ -33,26 +45,34 @@ class Game {
     //disable the current buttom so that the players cannot clicked already filled
     //buttons
     
-    func buttonPressed(_ sender: UIButton, xPlayerTurn : Bool) {
-    
+    open func buttonPressed(clickCoordinatePosition : Int) -> Bool{
         
-        if checkForWin(xPlayerTurn: xPlayerTurn) {
-            
-            if xPlayerTurn {displayGameResult(result : "X")}
-            else {displayGameResult(result: "O")}
-            resetBoard()
+        if xPlayerTurn {
+            coordinatesList[clickCoordinatePosition] = placeX
+        } else {
+            coordinatesList[clickCoordinatePosition] = placeO
         }
         
-        if checkForDraw() {
-            displayGameResult(result: "Draw")
-            resetBoard()
+        if checkForWin() {
+            print("Win")
+            coordinatesList.removeAll()
+            startGame()
+            return true
         }
+        
+        if checkForDraw(){
+            print("Draw")
+            coordinatesList.removeAll()
+            startGame()
+            return true
+        }
+        xPlayerTurn = !xPlayerTurn
+        return false
     }
     
-    
     func checkForDraw() -> Bool {
-        for button in gameButtonsList {
-            if button.title(for: .normal) == nil{
+        for coordinate in coordinatesList {
+            if coordinate != "empty" {
                 return false
             }
         }
@@ -60,62 +80,65 @@ class Game {
     }
     
     
-    func checkForWin(xPlayerTurn : Bool) -> Bool{
+    func checkForWin() -> Bool{
         
         var symbol : String
         if xPlayerTurn {symbol = "X"}
         else {symbol = "O"}
         
         //returns true if the symbols are the same on the horizontal line
-        if  gameButtonsList[0].title(for: .normal) == symbol && gameButtonsList[1].title(for: .normal) == symbol && gameButtonsList[2].title(for: .normal) == symbol {
+        if  coordinatesList[0] == symbol &&
+            coordinatesList[1] == symbol &&
+            coordinatesList[2] == symbol {
             return true
         }
-        if  gameButtonsList[3].title(for: .normal) == symbol && gameButtonsList[4].title(for: .normal) == symbol && gameButtonsList[5].title(for: .normal) == symbol {
+        if  coordinatesList[3] == symbol &&
+            coordinatesList[4] == symbol &&
+            coordinatesList[5] == symbol {
             return true
         }
-        if  gameButtonsList[6].title(for: .normal) == symbol && gameButtonsList[7].title(for: .normal) == symbol && gameButtonsList[8].title(for: .normal) == symbol {
+        if  coordinatesList[6] == symbol &&
+            coordinatesList[7] == symbol &&
+            coordinatesList[8] == symbol {
             return true
         }
         
         //returns true if the symbols are the same on the diagonal line
-        if  gameButtonsList[0].title(for: .normal) == symbol && gameButtonsList[4].title(for: .normal) == symbol && gameButtonsList[8].title(for: .normal) == symbol {
+        if  coordinatesList[0] == symbol &&
+            coordinatesList[4] == symbol &&
+            coordinatesList[8] == symbol {
             return true
         }
         
-        if  gameButtonsList[2].title(for: .normal) == symbol && gameButtonsList[4].title(for: .normal) == symbol && gameButtonsList[6].title(for: .normal) == symbol {
+        if  coordinatesList[2] == symbol &&
+            coordinatesList[4] == symbol &&
+            coordinatesList[6] == symbol {
             return true
         }
         
-            
+        
         //returns true if the symbols are the same on the vertical line
-        if  gameButtonsList[0].title(for: .normal) == symbol && gameButtonsList[3].title(for: .normal) == symbol && gameButtonsList[6].title(for: .normal) == symbol {
+        if  coordinatesList[0] == symbol &&
+            coordinatesList[3] == symbol &&
+            coordinatesList[6] == symbol {
             return true
         }
         
-        
-        if  gameButtonsList[1].title(for: .normal) == symbol && gameButtonsList[4].title(for: .normal) == symbol && gameButtonsList[7].title(for: .normal) == symbol {
+        if  coordinatesList[1] == symbol &&
+            coordinatesList[4] == symbol &&
+            coordinatesList[7] == symbol{
             return true
         }
         
-        if  gameButtonsList[2].title(for: .normal) == symbol && gameButtonsList[5].title(for: .normal) == symbol && gameButtonsList[8].title(for: .normal) == symbol {
+        if  coordinatesList[2] == symbol &&
+            coordinatesList[5] == symbol &&
+            coordinatesList[8] == symbol{
             return true
         }
         
         return false
     }
     
-    func resetBoard() {
-        print("reset")
-        for button in gameButtonsList {
-            button.setTitle(nil, for: .normal)
-            button.isEnabled = true
-        }
-    }
     
-    func displayGameResult(result : String) {
-        let message = UIAlertController(title: result, message: nil, preferredStyle: .alert)
-        
-        
-        print(result)
-    }
 }
+

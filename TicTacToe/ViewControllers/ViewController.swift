@@ -26,21 +26,33 @@ class ViewController: UIViewController {
     @IBOutlet weak var c3Btn: UIButton!
     
     //Initiates the game from class "Game"
-    let TicTacToe = Game(player1: "Player 1", player2: "Player2")
+    var player1Name = "Player 1"
+    var player2Name = "Player 2"
     
-    
+    let ticTacToe = Game()
     var buttonsList = [UIButton]()
-    var xPlayerTurn = true
-
+    
     var placeX = "X"
     var placeO = "O"
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         initGameButtons()
-        TicTacToe.startGame(buttonsList: buttonsList)
+        a1Btn.tag = 0
+        a2Btn.tag = 1
+        a3Btn.tag = 2
+        
+        b1Btn.tag = 3
+        b2Btn.tag = 4
+        b3Btn.tag = 5
+        
+        c1Btn.tag = 6
+        c2Btn.tag = 7
+        c3Btn.tag = 8
     }
-
+    
     //Adds the buttons to a list
     func initGameButtons(){
         buttonsList.append(a1Btn)
@@ -56,27 +68,45 @@ class ViewController: UIViewController {
         buttonsList.append(c3Btn)
     }
     
-    //Changes playerturn label on buttonclick
-    //and runs the Game-class finction buttonPressed, that will handle the logic
+    
+    //Checks what player turn it is and displays the X/O-label according to the playerturn.
+    //If the button title is not nil it will only check if the game is over and also
+    //disable the current buttom so that the players cannot clicked already filled
+    //buttons
+    
     @IBAction func anyButtonPressed(_ sender: UIButton) {
         if (sender.title(for: .normal) == nil){
             displayPlayerTurn()
-            if xPlayerTurn == true {
-                    sender.setTitle(placeX, for: .normal)
-                } else {
-                    sender.setTitle(placeO, for: .normal)
-                }
+            if ticTacToe.fetchXPlayerTurn() {
+                sender.setTitle(placeX, for: .normal)
+            } else {
+                sender.setTitle(placeO, for: .normal)
             }
-            sender.isEnabled = false
-            sender.setTitleColor(UIColor.white, for: .disabled)
+        }
+        sender.isEnabled = false
+        sender.setTitleColor(UIColor.white, for: .disabled)
         
-        TicTacToe.buttonPressed(sender, xPlayerTurn:xPlayerTurn)
-        xPlayerTurn = !xPlayerTurn
+        //placeonboard
+        var isGameOver = ticTacToe.buttonPressed(clickCoordinatePosition: sender.tag)
+        
+        if isGameOver {
+            resetBoard()
+            isGameOver = false
+        }
+        
+    }
+    
+    func resetBoard() {
+        print("reset")
+        for button in buttonsList {
+            button.setTitle(nil, for: .normal)
+            button.isEnabled = true
+        }
     }
     
     func displayPlayerTurn(){
-        if xPlayerTurn {playerTurnLabelOutlet.text = placeO}
-        else           {playerTurnLabelOutlet.text = placeX}
+        if ticTacToe.fetchXPlayerTurn() {playerTurnLabelOutlet.text = placeO}
+        else                            {playerTurnLabelOutlet.text = placeX}
     }
     
 }
