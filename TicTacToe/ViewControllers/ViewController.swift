@@ -120,7 +120,8 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIA
         
     }
     
-    //Result button that displays who won the round or if it is a draw, then resets the board
+    //Result alert that displays the winner the round or if it is a draw, then resets the board
+    //when user press "reset"
     func gameOverAlert(){
         let drawText = "The round ended as a draw"
         let alertTitle : String
@@ -139,9 +140,10 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIA
         // Creates OK button and add the board-reset functionality on OK-press
         let OKAction = UIAlertAction(title: "Reset", style: .default) { [self]
             (action: UIAlertAction!) in
-            self.resetBoard()
+
             self.updatePlayerScore()
             ticTacToe.restartGame()
+            self.resetBoard()
         }
         alertController.addAction(OKAction)
        
@@ -150,12 +152,6 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIA
         self.present(alertController, animated: true, completion: nil)
         
 
-//
-//
-//
-//        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-//        alert.addAction(UIAlertAction(title: "OK", style: .default)
-//                        alert.show(<#T##vc: UIViewController##UIViewController#>, sender: self)
     }
     
 
@@ -165,11 +161,11 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIA
 
         if playerOneStarts{
             playerTurnLabelOutlet.text = placeX
-            playerTurnLabelOutlet.text = playerTwoName + " Turn"
+            playerTurnLabelOutlet.text = playerOneName + " Turn"
             
         }else {
             playerTurnLabelOutlet.text = placeO
-            playerTurnSymbolLabelOutlet.text = playerOneName + " Turn"
+            playerTurnSymbolLabelOutlet.text = playerTwoName + " Turn"
             
         }
         
