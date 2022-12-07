@@ -12,6 +12,11 @@ protocol ClassSettingsViewControllerDelegate : AnyObject {
 }
 
 class SettingsViewController: UIViewController {
+    func updatePlayerNames(name1: String, name2: String) {
+        playerOneNameTextField.text = name1
+        playerTwoNameTextField.text = name2
+    }
+    
     
     weak var delegate: ClassSettingsViewControllerDelegate?
     
@@ -22,11 +27,13 @@ class SettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
     }
     
-    
-    @IBAction func asd(_ sender: Any) {
+    @IBAction func updatePlayerName(_ sender: Any) {
         delegate?.updatePlayerNames(name1: playerOneNameTextField.text ?? "Player 1",
                                     name2: playerTwoNameTextField.text ?? "Player 2")
     }
+    
+   
 }

@@ -70,6 +70,7 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIA
         c1Btn.tag = 6
         c2Btn.tag = 7
         c3Btn.tag = 8
+        
     }
     
     //Adds the buttons to a list
@@ -220,6 +221,9 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIA
         updatePlayerTurnDisplay()
     }
 
+    open func fetchPlayerOneName() -> String{
+        return playerOneName
+    }
     
 
 }
