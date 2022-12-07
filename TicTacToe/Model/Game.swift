@@ -73,17 +73,11 @@ class Game {
         if checkForWin() {
             if xPlayerTurn {player1Score += 1}
             else           {player2Score += 1}
-            
-            coordinatesList.removeAll()
-            startGame()
-            xPlayerTurn = true
+            restartGame()
             return true
         }
         
         if checkForDraw(){
-            coordinatesList.removeAll()
-            startGame()
-            xPlayerTurn = true
             return true
         }
         xPlayerTurn = !xPlayerTurn
@@ -103,6 +97,12 @@ class Game {
         return true
     }
     
+    //Resets the gameboard logic
+    open func restartGame(){
+        coordinatesList.removeAll()
+        startGame()
+        xPlayerTurn = true
+    }
     
     //Returns true if any player get three pieces of the same kind in a row.
     func checkForWin() -> Bool{

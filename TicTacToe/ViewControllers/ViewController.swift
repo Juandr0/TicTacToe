@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, ClassSettingsViewControllerDelegate {
+class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIAlertViewDelegate {
 
     
     //Settings-segue identifier
@@ -113,16 +113,50 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate {
         updatePlayerTurnDisplay()
         
         if isGameOver {
-            resetBoard()
-            updatePlayerScore()
-            updatePlayerTurnDisplay()
+            gameOverAlert()
+            self.updatePlayerTurnDisplay()
             isGameOver = false
         }
         
     }
     
-    
- 
+    //Result button that displays who won the round or if it is a draw, then resets the board
+    func gameOverAlert(){
+        let drawText = "The round ended as a draw"
+        let alertTitle : String
+        
+        var endedAsDraw = ticTacToe.checkForDraw()
+        var playerTurn = ticTacToe.fetchXPlayerTurn()
+        
+        if endedAsDraw { alertTitle = drawText
+        } else {
+            if playerTurn {alertTitle = playerOneName + " won the round"
+            } else {alertTitle = playerTwoName + " won the round"}
+        }
+
+        
+        let alertController = UIAlertController(title: alertTitle, message: nil, preferredStyle: .alert)
+        // Creates OK button and add the board-reset functionality on OK-press
+        let OKAction = UIAlertAction(title: "OK", style: .default) { [self]
+            (action: UIAlertAction!) in
+            self.resetBoard()
+            self.updatePlayerScore()
+            ticTacToe.restartGame()
+        }
+        alertController.addAction(OKAction)
+       
+
+        // Present Dialog message
+        self.present(alertController, animated: true, completion: nil)
+        
+
+//
+//
+//
+//        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+//        alert.addAction(UIAlertAction(title: "OK", style: .default)
+//                        alert.show(<#T##vc: UIViewController##UIViewController#>, sender: self)
+    }
     
 
     
