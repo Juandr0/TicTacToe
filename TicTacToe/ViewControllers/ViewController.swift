@@ -125,8 +125,8 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIA
         let drawText = "The round ended as a draw"
         let alertTitle : String
         
-        var endedAsDraw = ticTacToe.checkForDraw()
-        var playerTurn = ticTacToe.fetchXPlayerTurn()
+        let endedAsDraw = ticTacToe.checkForDraw()
+        let playerTurn = ticTacToe.fetchXPlayerTurn()
         
         if endedAsDraw { alertTitle = drawText
         } else {
@@ -137,7 +137,7 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIA
         
         let alertController = UIAlertController(title: alertTitle, message: nil, preferredStyle: .alert)
         // Creates OK button and add the board-reset functionality on OK-press
-        let OKAction = UIAlertAction(title: "OK", style: .default) { [self]
+        let OKAction = UIAlertAction(title: "Reset", style: .default) { [self]
             (action: UIAlertAction!) in
             self.resetBoard()
             self.updatePlayerScore()

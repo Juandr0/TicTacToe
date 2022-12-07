@@ -73,7 +73,6 @@ class Game {
         if checkForWin() {
             if xPlayerTurn {player1Score += 1}
             else           {player2Score += 1}
-            restartGame()
             return true
         }
         
