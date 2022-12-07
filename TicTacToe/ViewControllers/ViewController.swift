@@ -107,9 +107,10 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate {
         
         sender.isEnabled = false
         sender.setTitleColor(UIColor.white, for: .disabled)
-        
+      
        
         var isGameOver = ticTacToe.placeOnBoard(ViewButtonId: sender.tag)
+        updatePlayerTurnDisplay()
         
         if isGameOver {
             resetBoard()
@@ -128,7 +129,6 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate {
     //Resets the button titles to nil and enables them again.
     func resetBoard() {
 
-        print("reset")
         if playerOneStarts{
             playerTurnLabelOutlet.text = placeX
             playerTurnLabelOutlet.text = playerTwoName + " Turn"

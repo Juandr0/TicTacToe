@@ -71,8 +71,6 @@ class Game {
         }
         //Adds point to the winners total score
         if checkForWin() {
-            print("Win")
-        
             if xPlayerTurn {player1Score += 1}
             else           {player2Score += 1}
             
@@ -83,7 +81,6 @@ class Game {
         }
         
         if checkForDraw(){
-            print("Draw")
             coordinatesList.removeAll()
             startGame()
             xPlayerTurn = true
