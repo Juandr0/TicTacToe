@@ -7,7 +7,11 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, ClassSettingsViewControllerDelegate {
+
+    
+    //Settings-segue identifier
+    let segueToSettings = "segueToSettingsView"
     
     //Label that displays whos turn it is to play
     @IBOutlet weak var playerTurnLabelOutlet: UILabel!
@@ -84,12 +88,16 @@ class ViewController: UIViewController {
     }
     
     
+
+    
+    
     //Checks what player turn it is and displays the X/O-label according to the playerturn.
     //disables the cliicked button on click so that the players cannot click on already used buttons
     //If the button title is not nil it will only check if the game is over
     
     @IBAction func anyButtonPressed(_ sender: UIButton) {
         if (sender.title(for: .normal) == nil){
+            updatePlayerTurnDisplay()
             if ticTacToe.fetchXPlayerTurn() {
                 sender.setTitle(placeX, for: .normal)
             } else {
@@ -100,8 +108,8 @@ class ViewController: UIViewController {
         sender.isEnabled = false
         sender.setTitleColor(UIColor.white, for: .disabled)
         
+       
         var isGameOver = ticTacToe.placeOnBoard(ViewButtonId: sender.tag)
-        updatePlayerTurnDisplay()
         
         if isGameOver {
             resetBoard()
@@ -111,6 +119,9 @@ class ViewController: UIViewController {
         }
         
     }
+    
+    
+ 
     
 
     
@@ -139,11 +150,11 @@ class ViewController: UIViewController {
         
         if ticTacToe.fetchXPlayerTurn() {
             playerTurnSymbolLabelOutlet.text = placeX
-            playerTurnLabelOutlet.text = playerOneName + " Turn"
+            playerTurnLabelOutlet.text = playerOneName + "'s turn"
         }
         else                            {
             playerTurnSymbolLabelOutlet.text = placeO
-            playerTurnLabelOutlet.text = playerTwoName + " Turn"
+            playerTurnLabelOutlet.text = playerTwoName + "'s Turn"
         }
     }
     
@@ -157,5 +168,30 @@ class ViewController: UIViewController {
         
     }
     
+    
+    
+    @IBAction func settingsButtonPressed(_ sender: Any) {
+        performSegue(withIdentifier: segueToSettings, sender: self)
+        
+    }
+    
+    //Settings segue
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
+        if let settingsVC = segue.destination as? SettingsViewController {
+            settingsVC.delegate = self
+        }
+    }
+    
+    
+    func updatePlayerNames(name1: String, name2: String) {
+        playerOneName = name1
+        playerTwoName = name2
+        updatePlayerScore()
+        updatePlayerTurnDisplay()
+    }
+
+    
+
 }
+
 
