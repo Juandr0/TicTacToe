@@ -24,6 +24,7 @@ class SettingsViewController: UIViewController {
     var singlePlayerMode = false
     var ticTacToe = Game()
     
+    var randomNames = ["Charlie Chaplin", "Albert Einstein", "Stewen Hawkings", "Barack Obama", "James Bond", "Rihanna", "Danny Saucedo", "Megatron", "Batman", "Spider-man", "Superman", "Kim Kardashian", "Leif Loket Olsson", "Mahatma Gandhi", "Gordon Ramsay"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +35,7 @@ class SettingsViewController: UIViewController {
         singlePlayerMode = ticTacToe.fetchSinglePlayerStatus()
         singlePlayerSwitchOutlet.isOn = singlePlayerMode
         singlePlayerSwitchTrigger()
+        
         
     }
     
@@ -51,17 +53,16 @@ class SettingsViewController: UIViewController {
     }
     
     func singlePlayerSwitchTrigger(){
+        var randomName = generateRandomName()
         
         if singlePlayerSwitchOutlet.isOn {
-            playerTwoName = "AI-Player"
-            playerTwoNameTextField.text = "AI-Player"
-            print ("singleplayer")
+            playerTwoName = randomName
+            playerTwoNameTextField.text = randomName
             updateNames()
             singlePlayerMode = true
             ticTacToe.singlePlayerOnOff(on: true)
           
         } else {
-            print ("muliplayer")
             if playerTwoOriginalName != "AI-Player"{
                 playerTwoNameTextField.text = playerTwoOriginalName
             } else {
@@ -73,4 +74,12 @@ class SettingsViewController: UIViewController {
             ticTacToe.singlePlayerOnOff(on: false)
         }
     }
+    
+    func generateRandomName() -> String{
+        let random =  Int.random(in: 0..<randomNames.count)
+        return "Bot: " + randomNames[random]
+    }
+
+    
+    
 }
