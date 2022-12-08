@@ -9,7 +9,6 @@ import UIKit
 
 protocol ClassSettingsViewControllerDelegate : AnyObject {
     func updatePlayerNames(name1 : String, name2 : String)
-    func updateSingleplayerMode(singlePlayerModeOnOff : Bool)
 }
 
 class SettingsViewController: UIViewController {
@@ -55,8 +54,7 @@ class SettingsViewController: UIViewController {
             print ("singleplayer")
             updateNames()
             singlePlayerMode = true
-            delegate?.updateSingleplayerMode(singlePlayerModeOnOff: singlePlayerMode)
-            
+          
         } else {
             print ("muliplayer")
             if playerTwoOriginalName != "AI-Player"{
@@ -67,7 +65,7 @@ class SettingsViewController: UIViewController {
             updateNames()
             singlePlayerMode=false
             playerTwoNameTextField.isEnabled = true
-            delegate?.updateSingleplayerMode(singlePlayerModeOnOff: singlePlayerMode)
+            
         }
     }
 }

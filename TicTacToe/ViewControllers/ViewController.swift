@@ -42,7 +42,7 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIA
     var placeX = "X"
     var placeO = "O"
     var playerOneStarts = true
-    var singlePlayer = false
+  
     
     let ticTacToe = Game()
     var buttonsList = [UIButton]()
@@ -101,16 +101,18 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIA
         if (sender.title(for: .normal) == nil){
             updatePlayerTurnDisplay()
             if ticTacToe.fetchXPlayerTurn() {
-                sender.setTitle(placeX, for: .normal)
-            } else {
-                sender.setTitle(placeO, for: .normal)
+                sender.setTitle(placeX, for: .normal)}
+            else {sender.setTitle(placeO, for: .normal)}
+              
             }
-        }
         
         sender.isEnabled = false
         sender.setTitleColor(UIColor.white, for: .disabled)
-      
-       
+
+        
+        
+     
+        
         var isGameOver = ticTacToe.placeOnBoard(ViewButtonId: sender.tag)
         updatePlayerTurnDisplay()
         
@@ -120,8 +122,66 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIA
             isGameOver = false
         }
         
+        
+        //Detta behövs köras sista så att randomcoordinate hinner att uppdatera
+        if ticTacToe.fetchSinglePlayerStatus() {
+            let randomCoordinate = ticTacToe.fetchPlaceRandomOnBoard()
+            setCircleFromRandom(coordinate: randomCoordinate)
+        }
+        
     }
-    
+    func setCircleFromRandom(coordinate : String){
+        
+        switch coordinate {
+        case "a1": a1Btn.setTitle(placeO, for: .normal)
+            a1Btn.isEnabled = false
+            a1Btn.setTitleColor(UIColor.white, for: .disabled)
+            
+        case "a2": a2Btn.setTitle(placeO, for: .normal)
+            a2Btn.isEnabled = false
+            a2Btn.setTitleColor(UIColor.white, for: .disabled)
+            
+        case "a3": a3Btn.setTitle(placeO, for: .normal)
+            a3Btn.isEnabled = false
+            a3Btn.setTitleColor(UIColor.white, for: .disabled)
+            
+            
+            
+        case "b1": b1Btn.setTitle(placeO, for: .normal)
+            b1Btn.isEnabled = false
+            b1Btn.setTitleColor(UIColor.white, for: .disabled)
+
+        case "b2": b2Btn.setTitle(placeO, for: .normal)
+            b2Btn.isEnabled = false
+            b2Btn.setTitleColor(UIColor.white, for: .disabled)
+            
+        case "b3": b3Btn.setTitle(placeO, for: .normal)
+            b3Btn.isEnabled = false
+            b3Btn.setTitleColor(UIColor.white, for: .disabled)
+            
+            
+            
+        case "c1": c1Btn.setTitle(placeO, for: .normal)
+            c1Btn.isEnabled = false
+            c1Btn.setTitleColor(UIColor.white, for: .disabled)
+            
+        case "c2": c2Btn.setTitle(placeO, for: .normal)
+            c2Btn.isEnabled = false
+            c2Btn.setTitleColor(UIColor.white, for: .disabled)
+            
+        case "c3": c3Btn.setTitle(placeO, for: .normal)
+            c3Btn.isEnabled = false
+            c3Btn.setTitleColor(UIColor.white, for: .disabled)
+            
+            
+            
+        default:
+            return
+        }
+
+        
+        
+    }
     //Result alert that displays the winner the round or if it is a draw, then resets the board
     //when user press "reset"
     func gameOverAlert(){
@@ -209,7 +269,6 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIA
             settingsVC.delegate = self
             settingsVC.playerOneName = playerOneName
             settingsVC.playerTwoName = playerTwoName
-            settingsVC.singlePlayerMode = singlePlayer
         }
     }
     
@@ -220,9 +279,7 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIA
         updatePlayerTurnDisplay()
     }
 
-    func updateSingleplayerMode(singlePlayerModeOnOff: Bool) {
-        singlePlayer = singlePlayerModeOnOff
-    }
+
     
 
 }

@@ -9,34 +9,36 @@ import Foundation
 import UIKit
 
 class Game {
+   
     var coordinatesList = [String]()
     var xPlayerTurn = true
+    var singlePlayerActivated = true
     
     let placeX = "X"
     let placeO = "O"
     
     var player1Score = 0
     var player2Score = 0
-    
+    var randomOnBoard = ""
     init() {
         startGame()
     }
     
     func startGame (){
         //Represents coordinates a1-a3
-        coordinatesList.append("empty")
-        coordinatesList.append("empty")
-        coordinatesList.append("empty")
+        coordinatesList.append("a1")
+        coordinatesList.append("a2")
+        coordinatesList.append("a3")
         
         //Represents coordinates b1-b3
-        coordinatesList.append("empty")
-        coordinatesList.append("empty")
-        coordinatesList.append("empty")
+        coordinatesList.append("b1")
+        coordinatesList.append("b2")
+        coordinatesList.append("b3")
         
         //Represents coordinates c1-c3
-        coordinatesList.append("empty")
-        coordinatesList.append("empty")
-        coordinatesList.append("empty")
+        coordinatesList.append("c1")
+        coordinatesList.append("c2")
+        coordinatesList.append("c3")
     }
     
     func fetchXPlayerTurn() -> Bool {
@@ -62,12 +64,75 @@ class Game {
     //disable the current buttom so that the players cannot clicked already filled
     //buttons
     
+    open func placeRandomOnBoard() -> String{
+        let randomCoordinateAsString = randomCoordinateGenerator()
+        switch randomCoordinateAsString {
+            
+            case "a1": coordinatesList[0] = placeO
+            return "a1"
+            
+            case "a2": coordinatesList[1] = placeO
+            return "a2"
+            
+            case "a3": coordinatesList[2] = placeO
+            return "a3"
+            
+            
+            
+            case "b1": coordinatesList[3] = placeO
+            return "b1"
+            
+            case "b2": coordinatesList[4] = placeO
+            return "b2"
+            
+            case "b3": coordinatesList[5] = placeO
+            return "b3"
+                
+            
+            
+            
+            case "c1": coordinatesList[6] = placeO
+            return "c1"
+            
+            case "c2": coordinatesList[7] = placeO
+            return "c2"
+            
+            case "c3": coordinatesList[8] = placeO
+            return "c3"
+            
+        default:
+            print("default")
+        }
+        return "default"
+    }
+    
+    open func fetchPlaceRandomOnBoard() -> String{
+        return randomOnBoard
+    }
+    
+    
     open func placeOnBoard(ViewButtonId : Int) -> Bool{
         
         if xPlayerTurn {
             coordinatesList[ViewButtonId] = placeX
+            if checkForWin() {
+                if xPlayerTurn {player1Score += 1}
+                else           {player2Score += 1}
+                return true
+            }
+            xPlayerTurn = !xPlayerTurn
+            if singlePlayerActivated {
+                randomOnBoard = placeRandomOnBoard()
+                if checkForWin() {
+                    if xPlayerTurn {player1Score += 1}
+                    else           {player2Score += 1}
+                    return true
+                }
+        }
+
         } else {
             coordinatesList[ViewButtonId] = placeO
+
         }
         //Adds point to the winners total score
         if checkForWin() {
@@ -79,7 +144,9 @@ class Game {
         if checkForDraw(){
             return true
         }
-        xPlayerTurn = !xPlayerTurn
+        
+        if !singlePlayerActivated {xPlayerTurn = !xPlayerTurn}
+        else {xPlayerTurn = true}
         return false
     }
     
@@ -89,7 +156,8 @@ class Game {
     //there are no buttons left to click on.
     func checkForDraw() -> Bool {
         for coordinate in coordinatesList {
-            if coordinate == "empty" {
+            
+            if  coordinate == "a1" || coordinate == "a2" || coordinate == "a3" || coordinate == "b1" || coordinate == "b2" || coordinate == "b3" || coordinate == "c1" || coordinate == "c2" || coordinate == "c3"{
                 return false
             }
         }
@@ -163,6 +231,32 @@ class Game {
         return false
     }
     
+    func randomCoordinateGenerator() -> String{
+        var emptySpaces = [String]()
+
+        if coordinatesList.contains("a1") {emptySpaces.append("a1")}
+        if coordinatesList.contains("a2") {emptySpaces.append("a2")}
+        if coordinatesList.contains("a3") {emptySpaces.append("a3")}
+        
+        if coordinatesList.contains("b1") {emptySpaces.append("b1")}
+        if coordinatesList.contains("b2") {emptySpaces.append("b2")}
+        if coordinatesList.contains("b3") {emptySpaces.append("b3")}
+        
+        if coordinatesList.contains("c1") {emptySpaces.append("c1")}
+        if coordinatesList.contains("c2") {emptySpaces.append("c2")}
+        if coordinatesList.contains("c3") {emptySpaces.append("c3")}
+        
+        if emptySpaces.isEmpty == false{
+            let randomNumber = Int.random(in: 0..<emptySpaces.count)
+            print (emptySpaces[randomNumber])
+            randomOnBoard = emptySpaces[randomNumber]
+            return emptySpaces[randomNumber]
+        }
+        return emptySpaces[0]
+    }
     
+    func fetchSinglePlayerStatus() -> Bool {
+        return singlePlayerActivated
+    }
 }
 
