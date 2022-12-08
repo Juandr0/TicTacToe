@@ -12,14 +12,14 @@ class Game {
    
     var coordinatesList = [String]()
     var xPlayerTurn = true
-    var singlePlayerActivated = true
+    var singlePlayerActivated = false
     
     let placeX = "X"
     let placeO = "O"
     
     var player1Score = 0
     var player2Score = 0
-    var randomOnBoard = ""
+    var latestRandomCoordinate = ""
     init() {
         startGame()
     }
@@ -45,6 +45,7 @@ class Game {
         return xPlayerTurn
     }
     
+    //returns the score of the players
     func fetchPlayerScore(player : String) -> Int {
 
         if (player == "playerOne"){
@@ -55,14 +56,13 @@ class Game {
         
     }
     
+    //re-initiates the default coordinates list
     func resetGame (){
         startGame()
     }
     
-    //Checks what player turn it is and displays the X/O according to the playerturn.
-    //If the button title is not nil it will only check if the game is over and also
-    //disable the current buttom so that the players cannot clicked already filled
-    //buttons
+    //Checks what player turn it is and displays the X/O according to the playerturn on click
+    //If the button title is not any of the grid-coordinates it will only check if the game is over.
     
     open func placeRandomOnBoard() -> String{
         let randomCoordinateAsString = randomCoordinateGenerator()
@@ -110,14 +110,27 @@ class Game {
         return "empty"
     }
     
-    open func fetchPlaceRandomOnBoard() -> String{
-        return randomOnBoard
+    //returns the last placed random coordinate as a string
+    open func fetchLatestRandomCoordinate() -> String{
+        return latestRandomCoordinate
     }
+    
+    //adds points to the active player, this function runs together with winCheck
     
     func addPlayerPoints(){
         if xPlayerTurn {player1Score += 1}
         else           {player2Score += 1}
     }
+    
+    //On button-click in the viewController this function will
+    //run and change the coordinates in the list to either "X" or "O"
+    //Then it checks if a player has won the game or if its a draw. If it's-
+    //neither the game will switch player turn and run again on next buttonclick.
+    
+    //If boolean singleplayermode is true the game will run playerTwo's
+    //turn directly after player one is finished with a randomly generated-
+    //coordinate, hence two turns will run at once if in singleplayermode.
+    
     open func placeOnBoard(ViewButtonId : Int) -> Bool{
         
         if xPlayerTurn {
@@ -131,9 +144,10 @@ class Game {
                 return true
             }
             
-            xPlayerTurn = !xPlayerTurn
+
             if singlePlayerActivated {
-                randomOnBoard = placeRandomOnBoard()
+                xPlayerTurn = !xPlayerTurn
+                latestRandomCoordinate = placeRandomOnBoard()
             
                 if checkForWin() {
                     addPlayerPoints()
@@ -148,9 +162,10 @@ class Game {
 
         } else {
             coordinatesList[ViewButtonId] = placeO
-
         }
-        //Adds point to the winners total score
+        
+        
+ 
         if checkForWin() {
             addPlayerPoints()
             return true
@@ -166,8 +181,8 @@ class Game {
     }
     
     
-    //Looks if any of the remaining coordinates is set to the value "empty".
-    //If no coordinates are empty it will return true, which indicates a draw since-
+    //Looks if any of the remaining coordinates is set to the preset coordinate-values.
+    //If no coordinate is left with its original string the function will return true, which indicates a draw since-
     //there are no buttons left to click on.
     func checkForDraw() -> Bool {
         for coordinate in coordinatesList {
@@ -186,7 +201,7 @@ class Game {
         xPlayerTurn = true
     }
     
-    //Returns true if any player get three pieces of the same kind in a row.
+    //Returns true if any player get three pieces of the same symbol in a row.
     func checkForWin() -> Bool{
         
         var symbol : String
@@ -264,7 +279,7 @@ class Game {
         if emptySpaces.isEmpty == false{
             let randomNumber = Int.random(in: 0..<emptySpaces.count)
             print (emptySpaces[randomNumber])
-            randomOnBoard = emptySpaces[randomNumber]
+            latestRandomCoordinate = emptySpaces[randomNumber]
             return emptySpaces[randomNumber]
         }
         return "empty"
@@ -272,6 +287,13 @@ class Game {
     
     func fetchSinglePlayerStatus() -> Bool {
         return singlePlayerActivated
+    }
+    
+    //Corresponds with the switch on settingsVC
+    //When turned on, the single player mode is turned on
+    //When turned off, the single player mode is turned off
+    open func singlePlayerOnOff(on : Bool){
+        singlePlayerActivated = on
     }
 }
 

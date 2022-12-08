@@ -125,7 +125,7 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIA
         
         //Detta behövs köras sista så att randomcoordinate kommer att uppdatera
         if ticTacToe.fetchSinglePlayerStatus() {
-            let randomCoordinate = ticTacToe.fetchPlaceRandomOnBoard()
+            let randomCoordinate = ticTacToe.fetchLatestRandomCoordinate()
             setCircleFromRandom(coordinate: randomCoordinate)
         }
         
@@ -269,17 +269,18 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIA
             settingsVC.delegate = self
             settingsVC.playerOneName = playerOneName
             settingsVC.playerTwoName = playerTwoName
+            settingsVC.ticTacToe = ticTacToe
         }
     }
     
-    
+    //Runs protocoll that updates the names with those in the settings VC
     func updatePlayerNames(name1: String, name2: String) {
         playerOneName = name1
         playerTwoName = name2
         updatePlayerTurnDisplay()
     }
 
-
+    
     
 
 }

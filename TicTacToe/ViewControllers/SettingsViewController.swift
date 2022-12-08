@@ -22,6 +22,7 @@ class SettingsViewController: UIViewController {
     var playerTwoName : String = "Player 2"
     var playerTwoOriginalName : String?
     var singlePlayerMode = false
+    var ticTacToe = Game()
     
     
     override func viewDidLoad() {
@@ -29,8 +30,11 @@ class SettingsViewController: UIViewController {
         playerOneNameTextField.text = playerOneName
         playerTwoNameTextField.text = playerTwoName
         playerTwoOriginalName = playerTwoName
+        
+        singlePlayerMode = ticTacToe.fetchSinglePlayerStatus()
         singlePlayerSwitchOutlet.isOn = singlePlayerMode
         singlePlayerSwitchTrigger()
+        
     }
     
     @IBAction func updatePlayerName(_ sender: Any) {
@@ -54,6 +58,7 @@ class SettingsViewController: UIViewController {
             print ("singleplayer")
             updateNames()
             singlePlayerMode = true
+            ticTacToe.singlePlayerOnOff(on: true)
           
         } else {
             print ("muliplayer")
@@ -65,7 +70,7 @@ class SettingsViewController: UIViewController {
             updateNames()
             singlePlayerMode=false
             playerTwoNameTextField.isEnabled = true
-            
+            ticTacToe.singlePlayerOnOff(on: false)
         }
     }
 }
