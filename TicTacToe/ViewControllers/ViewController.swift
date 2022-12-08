@@ -188,7 +188,8 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIA
         let alertTitle : String
         let drawText = "The round ended as a draw"
 
-        let endedAsDraw = ticTacToe.checkForDraw()
+
+        let endedAsWin = ticTacToe.checkForWin()
         let playerTurn = ticTacToe.fetchXPlayerTurn()
         
         let playerOneScore = ticTacToe.fetchPlayerScore(player: "playerOne")
@@ -198,10 +199,10 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIA
                                 "\n\n\n\(playerOneName): \(playerOneScore)\n" +
                                 "\(playerTwoName): \(playerTwoScore)"
         
-        if endedAsDraw { alertTitle = drawText
-        } else {
+        if endedAsWin {
             if playerTurn {alertTitle = playerOneName + " won"
             } else {alertTitle = playerTwoName + " won"}
+        } else { alertTitle = drawText
         }
 
         
