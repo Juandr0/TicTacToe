@@ -9,6 +9,8 @@ import UIKit
 
 
 class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIAlertViewDelegate {
+
+    
     
     //Settings-segue identifier
     let segueToSettings = "segueToSettingsView"
@@ -40,6 +42,7 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIA
     var placeX = "X"
     var placeO = "O"
     var playerOneStarts = true
+    var singlePlayer = false
     
     let ticTacToe = Game()
     var buttonsList = [UIButton]()
@@ -206,6 +209,7 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIA
             settingsVC.delegate = self
             settingsVC.playerOneName = playerOneName
             settingsVC.playerTwoName = playerTwoName
+            settingsVC.singlePlayerMode = singlePlayer
         }
     }
     
@@ -216,6 +220,9 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIA
         updatePlayerTurnDisplay()
     }
 
+    func updateSingleplayerMode(singlePlayerModeOnOff: Bool) {
+        singlePlayer = singlePlayerModeOnOff
+    }
     
 
 }
