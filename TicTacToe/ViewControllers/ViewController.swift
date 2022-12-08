@@ -17,10 +17,6 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIA
     @IBOutlet weak var playerTurnLabelOutlet: UILabel!
     @IBOutlet weak var playerTurnSymbolLabelOutlet: UILabel!
     
-    //Score label outlets
-    @IBOutlet weak var playerOneScoreLabelOutlet: UILabel!
-    @IBOutlet weak var playerTwoScoreLabelOutlet: UILabel!
-    
     
     //Game-buttons
     @IBOutlet weak var a1Btn: UIButton!
@@ -56,7 +52,6 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIA
     override func viewDidLoad() {
         super.viewDidLoad()
         initGameButtons()
-        updatePlayerScore()
         updatePlayerTurnDisplay()
 
         
@@ -127,25 +122,30 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIA
     //Result alert that displays the winner the round or if it is a draw, then resets the board
     //when user press "reset"
     func gameOverAlert(){
-        let drawText = "The round ended as a draw"
         let alertTitle : String
-        
+        let drawText = "The round ended as a draw"
+
         let endedAsDraw = ticTacToe.checkForDraw()
         let playerTurn = ticTacToe.fetchXPlayerTurn()
         
+        let playerOneScore = ticTacToe.fetchPlayerScore(player: "playerOne")
+        let playerTwoScore = ticTacToe.fetchPlayerScore(player: "playerTwo")
+        
+        let scoreBoardMessage = "\nTotal score" +
+                                "\n\n\n\(playerOneName): \(playerOneScore)\n" +
+                                "\(playerTwoName): \(playerTwoScore)"
+        
         if endedAsDraw { alertTitle = drawText
         } else {
-            if playerTurn {alertTitle = playerOneName + " won the round"
-            } else {alertTitle = playerTwoName + " won the round"}
+            if playerTurn {alertTitle = playerOneName + " won"
+            } else {alertTitle = playerTwoName + " won"}
         }
 
         
-        let alertController = UIAlertController(title: alertTitle, message: nil, preferredStyle: .alert)
+        let alertController = UIAlertController(title: alertTitle, message: scoreBoardMessage, preferredStyle: .alert)
         // Creates OK button and add the board-reset functionality on OK-press
         let OKAction = UIAlertAction(title: "Reset", style: .default) { [self]
             (action: UIAlertAction!) in
-
-            self.updatePlayerScore()
             self.ticTacToe.restartGame()
             self.resetBoard()
         }
@@ -165,11 +165,11 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIA
 
         if playerOneStarts{
             playerTurnLabelOutlet.text = placeX
-            playerTurnLabelOutlet.text = playerOneName + " Turn"
+            playerTurnLabelOutlet.text = playerOneName + " turn"
             
         }else {
             playerTurnLabelOutlet.text = placeO
-            playerTurnSymbolLabelOutlet.text = playerTwoName + " Turn"
+            playerTurnSymbolLabelOutlet.text = playerTwoName + " turn"
             
         }
         
@@ -184,21 +184,12 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIA
         
         if ticTacToe.fetchXPlayerTurn() {
             playerTurnSymbolLabelOutlet.text = placeX
-            playerTurnLabelOutlet.text = playerOneName + "'s turn"
+            playerTurnLabelOutlet.text = playerOneName + " turn"
         }
         else                            {
             playerTurnSymbolLabelOutlet.text = placeO
-            playerTurnLabelOutlet.text = playerTwoName + "'s Turn"
+            playerTurnLabelOutlet.text = playerTwoName + " turn"
         }
-    }
-    
-    //Fetches the player score and displays it on the screen alongside the playername
-    func updatePlayerScore(){
-        let playerOneScore = ticTacToe.fetchPlayerScore(player: "playerOne")
-        playerOneScoreLabelOutlet.text = playerOneName + ": " + String(playerOneScore)
-        
-        let playerTwoScore = ticTacToe.fetchPlayerScore(player: "playerTwo")
-        playerTwoScoreLabelOutlet.text = playerTwoName + ": " + String(playerTwoScore)
     }
     
     
@@ -222,7 +213,6 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIA
     func updatePlayerNames(name1: String, name2: String) {
         playerOneName = name1
         playerTwoName = name2
-        updatePlayerScore()
         updatePlayerTurnDisplay()
     }
 
