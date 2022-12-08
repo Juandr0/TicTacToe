@@ -66,68 +66,84 @@ class Game {
     
     open func placeRandomOnBoard() -> String{
         let randomCoordinateAsString = randomCoordinateGenerator()
-        switch randomCoordinateAsString {
-            
-            case "a1": coordinatesList[0] = placeO
-            return "a1"
-            
-            case "a2": coordinatesList[1] = placeO
-            return "a2"
-            
-            case "a3": coordinatesList[2] = placeO
-            return "a3"
-            
-            
-            
-            case "b1": coordinatesList[3] = placeO
-            return "b1"
-            
-            case "b2": coordinatesList[4] = placeO
-            return "b2"
-            
-            case "b3": coordinatesList[5] = placeO
-            return "b3"
+        
+        if randomCoordinateAsString != "empty"{
+            switch randomCoordinateAsString {
                 
-            
-            
-            
-            case "c1": coordinatesList[6] = placeO
-            return "c1"
-            
-            case "c2": coordinatesList[7] = placeO
-            return "c2"
-            
-            case "c3": coordinatesList[8] = placeO
-            return "c3"
-            
-        default:
-            print("default")
+                case "a1": coordinatesList[0] = placeO
+                return "a1"
+                
+                case "a2": coordinatesList[1] = placeO
+                return "a2"
+                
+                case "a3": coordinatesList[2] = placeO
+                return "a3"
+                
+                
+                
+                case "b1": coordinatesList[3] = placeO
+                return "b1"
+                
+                case "b2": coordinatesList[4] = placeO
+                return "b2"
+                
+                case "b3": coordinatesList[5] = placeO
+                return "b3"
+                    
+                
+                
+                
+                case "c1": coordinatesList[6] = placeO
+                return "c1"
+                
+                case "c2": coordinatesList[7] = placeO
+                return "c2"
+                
+                case "c3": coordinatesList[8] = placeO
+                return "c3"
+                
+            default:
+                print("default")
+            }
+            return "default"
         }
-        return "default"
+        return "empty"
     }
     
     open func fetchPlaceRandomOnBoard() -> String{
         return randomOnBoard
     }
     
-    
+    func addPlayerPoints(){
+        if xPlayerTurn {player1Score += 1}
+        else           {player2Score += 1}
+    }
     open func placeOnBoard(ViewButtonId : Int) -> Bool{
         
         if xPlayerTurn {
             coordinatesList[ViewButtonId] = placeX
+      
             if checkForWin() {
-                if xPlayerTurn {player1Score += 1}
-                else           {player2Score += 1}
+                addPlayerPoints()
                 return true
             }
+            if checkForDraw(){
+                return true
+            }
+            
             xPlayerTurn = !xPlayerTurn
             if singlePlayerActivated {
                 randomOnBoard = placeRandomOnBoard()
+            
                 if checkForWin() {
-                    if xPlayerTurn {player1Score += 1}
-                    else           {player2Score += 1}
+                    addPlayerPoints()
                     return true
                 }
+                if checkForDraw(){
+                    return true
+                }
+                
+                
         }
 
         } else {
@@ -136,8 +152,7 @@ class Game {
         }
         //Adds point to the winners total score
         if checkForWin() {
-            if xPlayerTurn {player1Score += 1}
-            else           {player2Score += 1}
+            addPlayerPoints()
             return true
         }
         
@@ -252,7 +267,7 @@ class Game {
             randomOnBoard = emptySpaces[randomNumber]
             return emptySpaces[randomNumber]
         }
-        return emptySpaces[0]
+        return "empty"
     }
     
     func fetchSinglePlayerStatus() -> Bool {

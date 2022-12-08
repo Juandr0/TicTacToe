@@ -123,7 +123,7 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIA
         }
         
         
-        //Detta behövs köras sista så att randomcoordinate hinner att uppdatera
+        //Detta behövs köras sista så att randomcoordinate kommer att uppdatera
         if ticTacToe.fetchSinglePlayerStatus() {
             let randomCoordinate = ticTacToe.fetchPlaceRandomOnBoard()
             setCircleFromRandom(coordinate: randomCoordinate)
