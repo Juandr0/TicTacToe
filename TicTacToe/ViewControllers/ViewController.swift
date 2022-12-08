@@ -7,8 +7,8 @@
 
 import UIKit
 
-class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIAlertViewDelegate {
 
+class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIAlertViewDelegate {
     
     //Settings-segue identifier
     let segueToSettings = "segueToSettingsView"
@@ -58,6 +58,8 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIA
         initGameButtons()
         updatePlayerScore()
         updatePlayerTurnDisplay()
+
+        
         
         a1Btn.tag = 0
         a2Btn.tag = 1
@@ -73,6 +75,7 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIA
         
     }
     
+  
     //Adds the buttons to a list
     func initGameButtons(){
         buttonsList.append(a1Btn)
@@ -115,7 +118,7 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIA
         
         if isGameOver {
             gameOverAlert()
-            self.updatePlayerTurnDisplay()
+            updatePlayerTurnDisplay()
             isGameOver = false
         }
         
@@ -143,7 +146,7 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIA
             (action: UIAlertAction!) in
 
             self.updatePlayerScore()
-            ticTacToe.restartGame()
+            self.ticTacToe.restartGame()
             self.resetBoard()
         }
         alertController.addAction(OKAction)
@@ -191,25 +194,27 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIA
     
     //Fetches the player score and displays it on the screen alongside the playername
     func updatePlayerScore(){
-        var playerOneScore = ticTacToe.fetchPlayerScore(player: "playerOne")
+        let playerOneScore = ticTacToe.fetchPlayerScore(player: "playerOne")
         playerOneScoreLabelOutlet.text = playerOneName + ": " + String(playerOneScore)
         
-        var playerTwoScore = ticTacToe.fetchPlayerScore(player: "playerTwo")
+        let playerTwoScore = ticTacToe.fetchPlayerScore(player: "playerTwo")
         playerTwoScoreLabelOutlet.text = playerTwoName + ": " + String(playerTwoScore)
-        
     }
     
     
     
     @IBAction func settingsButtonPressed(_ sender: Any) {
+
         performSegue(withIdentifier: segueToSettings, sender: self)
-        
     }
+    
     
     //Settings segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?){
         if let settingsVC = segue.destination as? SettingsViewController {
             settingsVC.delegate = self
+            settingsVC.playerOneName = playerOneName
+            settingsVC.playerTwoName = playerTwoName
         }
     }
     
@@ -221,9 +226,6 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIA
         updatePlayerTurnDisplay()
     }
 
-    open func fetchPlayerOneName() -> String{
-        return playerOneName
-    }
     
 
 }
