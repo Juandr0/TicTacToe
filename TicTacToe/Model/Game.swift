@@ -19,7 +19,7 @@ class Game {
     
     var player1Score = 0
     var player2Score = 0
-    var latestRandomCoordinate = ""
+    var latestRandomCoordinate : String?
     init() {
         startGame()
     }
@@ -112,7 +112,7 @@ class Game {
     
     //returns the last placed random coordinate as a string
     open func fetchLatestRandomCoordinate() -> String{
-        return latestRandomCoordinate
+        return latestRandomCoordinate ?? ""
     }
     
     //adds points to the active player, this function runs together with winCheck
@@ -164,8 +164,7 @@ class Game {
             coordinatesList[ViewButtonId] = placeO
         }
         
-        
- 
+    
         if checkForWin() {
             addPlayerPoints()
             return true

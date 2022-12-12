@@ -13,7 +13,9 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIA
     
     
     //Settings-segue identifier
-    let segueToSettings = "segueToSettingsView"
+    enum Segue {
+        static let toSettings = "segueToSettingsView"
+    }
     
     //Label that displays whos turn it is to play
     @IBOutlet weak var playerTurnLabelOutlet: UILabel!
@@ -259,8 +261,7 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIA
     
     
     @IBAction func settingsButtonPressed(_ sender: Any) {
-
-        performSegue(withIdentifier: segueToSettings, sender: self)
+        performSegue(withIdentifier: Segue.toSettings, sender: self)
     }
     
     

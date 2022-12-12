@@ -34,9 +34,7 @@ class SettingsViewController: UIViewController {
         
         singlePlayerMode = ticTacToe.fetchSinglePlayerStatus()
         singlePlayerSwitchOutlet.isOn = singlePlayerMode
-        singlePlayerSwitchTrigger()
-        
-        
+
     }
     
     @IBAction func updatePlayerName(_ sender: Any) {
@@ -62,8 +60,9 @@ class SettingsViewController: UIViewController {
             singlePlayerMode = true
             ticTacToe.singlePlayerOnOff(on: true)
           
+
         } else {
-            if playerTwoOriginalName != "AI-Player"{
+            if playerTwoOriginalName != playerTwoOriginalName{
                 playerTwoNameTextField.text = playerTwoOriginalName
             } else {
                 playerTwoNameTextField.text = "Player 2"
