@@ -7,19 +7,19 @@
 
 import UIKit
 
-class ViewController: UIViewController, ClassSettingsViewControllerDelegate {
+
+class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIAlertViewDelegate {
 
     
+    
     //Settings-segue identifier
-    let segueToSettings = "segueToSettingsView"
+    enum Segue {
+        static let toSettings = "segueToSettingsView"
+    }
     
     //Label that displays whos turn it is to play
     @IBOutlet weak var playerTurnLabelOutlet: UILabel!
     @IBOutlet weak var playerTurnSymbolLabelOutlet: UILabel!
-    
-    //Score label outlets
-    @IBOutlet weak var playerOneScoreLabelOutlet: UILabel!
-    @IBOutlet weak var playerTwoScoreLabelOutlet: UILabel!
     
     
     //Game-buttons
@@ -44,6 +44,7 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate {
     var placeX = "X"
     var placeO = "O"
     var playerOneStarts = true
+  
     
     let ticTacToe = Game()
     var buttonsList = [UIButton]()
@@ -56,8 +57,9 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         initGameButtons()
-        updatePlayerScore()
         updatePlayerTurnDisplay()
+
+        
         
         a1Btn.tag = 0
         a2Btn.tag = 1
@@ -70,8 +72,10 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate {
         c1Btn.tag = 6
         c2Btn.tag = 7
         c3Btn.tag = 8
+        
     }
     
+  
     //Adds the buttons to a list
     func initGameButtons(){
         buttonsList.append(a1Btn)
@@ -99,30 +103,126 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate {
         if (sender.title(for: .normal) == nil){
             updatePlayerTurnDisplay()
             if ticTacToe.fetchXPlayerTurn() {
-                sender.setTitle(placeX, for: .normal)
-            } else {
-                sender.setTitle(placeO, for: .normal)
+                sender.setTitle(placeX, for: .normal)}
+            else {sender.setTitle(placeO, for: .normal)}
+              
             }
-        }
         
         sender.isEnabled = false
         sender.setTitleColor(UIColor.white, for: .disabled)
-      
-       
+
+        
+        
+     
+        
         var isGameOver = ticTacToe.placeOnBoard(ViewButtonId: sender.tag)
         updatePlayerTurnDisplay()
         
         if isGameOver {
-            resetBoard()
-            updatePlayerScore()
+            gameOverAlert()
             updatePlayerTurnDisplay()
             isGameOver = false
         }
         
+        
+        //Detta behövs köras sista så att randomcoordinate kommer att uppdatera
+        if ticTacToe.fetchSinglePlayerStatus() {
+            let randomCoordinate = ticTacToe.fetchLatestRandomCoordinate()
+            setCircleFromRandom(coordinate: randomCoordinate)
+        }
+        
     }
-    
-    
- 
+    func setCircleFromRandom(coordinate : String){
+        
+        switch coordinate {
+        case "a1": a1Btn.setTitle(placeO, for: .normal)
+            a1Btn.isEnabled = false
+            a1Btn.setTitleColor(UIColor.white, for: .disabled)
+            
+        case "a2": a2Btn.setTitle(placeO, for: .normal)
+            a2Btn.isEnabled = false
+            a2Btn.setTitleColor(UIColor.white, for: .disabled)
+            
+        case "a3": a3Btn.setTitle(placeO, for: .normal)
+            a3Btn.isEnabled = false
+            a3Btn.setTitleColor(UIColor.white, for: .disabled)
+            
+            
+            
+        case "b1": b1Btn.setTitle(placeO, for: .normal)
+            b1Btn.isEnabled = false
+            b1Btn.setTitleColor(UIColor.white, for: .disabled)
+
+        case "b2": b2Btn.setTitle(placeO, for: .normal)
+            b2Btn.isEnabled = false
+            b2Btn.setTitleColor(UIColor.white, for: .disabled)
+            
+        case "b3": b3Btn.setTitle(placeO, for: .normal)
+            b3Btn.isEnabled = false
+            b3Btn.setTitleColor(UIColor.white, for: .disabled)
+            
+            
+            
+        case "c1": c1Btn.setTitle(placeO, for: .normal)
+            c1Btn.isEnabled = false
+            c1Btn.setTitleColor(UIColor.white, for: .disabled)
+            
+        case "c2": c2Btn.setTitle(placeO, for: .normal)
+            c2Btn.isEnabled = false
+            c2Btn.setTitleColor(UIColor.white, for: .disabled)
+            
+        case "c3": c3Btn.setTitle(placeO, for: .normal)
+            c3Btn.isEnabled = false
+            c3Btn.setTitleColor(UIColor.white, for: .disabled)
+            
+            
+            
+        default:
+            return
+        }
+
+        
+        
+    }
+    //Result alert that displays the winner the round or if it is a draw, then resets the board
+    //when user press "reset"
+    func gameOverAlert(){
+        let alertTitle : String
+        let drawText = "The round ended as a draw"
+
+
+        let endedAsWin = ticTacToe.checkForWin()
+        let playerTurn = ticTacToe.fetchXPlayerTurn()
+        
+        let playerOneScore = ticTacToe.fetchPlayerScore(player: "playerOne")
+        let playerTwoScore = ticTacToe.fetchPlayerScore(player: "playerTwo")
+        
+        let scoreBoardMessage = "\nTotal score" +
+                                "\n\n\n\(playerOneName): \(playerOneScore)\n" +
+                                "\(playerTwoName): \(playerTwoScore)"
+        
+        if endedAsWin {
+            if playerTurn {alertTitle = playerOneName + " won"
+            } else {alertTitle = playerTwoName + " won"}
+        } else { alertTitle = drawText
+        }
+
+        
+        let alertController = UIAlertController(title: alertTitle, message: scoreBoardMessage, preferredStyle: .alert)
+        // Creates OK button and add the board-reset functionality on OK-press
+        let OKAction = UIAlertAction(title: "Reset", style: .default) { [self]
+            (action: UIAlertAction!) in
+            self.ticTacToe.restartGame()
+            self.resetBoard()
+        }
+        alertController.addAction(OKAction)
+       
+
+        // Present Dialog message
+        self.present(alertController, animated: true, completion: nil)
+        
+
+    }
     
 
     
@@ -131,11 +231,11 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate {
 
         if playerOneStarts{
             playerTurnLabelOutlet.text = placeX
-            playerTurnLabelOutlet.text = playerTwoName + " Turn"
+            playerTurnLabelOutlet.text = playerOneName + " turn"
             
         }else {
             playerTurnLabelOutlet.text = placeO
-            playerTurnSymbolLabelOutlet.text = playerOneName + " Turn"
+            playerTurnSymbolLabelOutlet.text = playerTwoName + " turn"
             
         }
         
@@ -150,46 +250,39 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate {
         
         if ticTacToe.fetchXPlayerTurn() {
             playerTurnSymbolLabelOutlet.text = placeX
-            playerTurnLabelOutlet.text = playerOneName + "'s turn"
+            playerTurnLabelOutlet.text = playerOneName + " turn"
         }
         else                            {
             playerTurnSymbolLabelOutlet.text = placeO
-            playerTurnLabelOutlet.text = playerTwoName + "'s Turn"
+            playerTurnLabelOutlet.text = playerTwoName + " turn"
         }
-    }
-    
-    //Fetches the player score and displays it on the screen alongside the playername
-    func updatePlayerScore(){
-        var playerOneScore = ticTacToe.fetchPlayerScore(player: "playerOne")
-        playerOneScoreLabelOutlet.text = playerOneName + ": " + String(playerOneScore)
-        
-        var playerTwoScore = ticTacToe.fetchPlayerScore(player: "playerTwo")
-        playerTwoScoreLabelOutlet.text = playerTwoName + ": " + String(playerTwoScore)
-        
     }
     
     
     
     @IBAction func settingsButtonPressed(_ sender: Any) {
-        performSegue(withIdentifier: segueToSettings, sender: self)
-        
+        performSegue(withIdentifier: Segue.toSettings, sender: self)
     }
+    
     
     //Settings segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?){
         if let settingsVC = segue.destination as? SettingsViewController {
             settingsVC.delegate = self
+            settingsVC.playerOneName = playerOneName
+            settingsVC.playerTwoName = playerTwoName
+            settingsVC.ticTacToe = ticTacToe
         }
     }
     
-    
+    //Runs protocoll that updates the names with those in the settings VC
     func updatePlayerNames(name1: String, name2: String) {
         playerOneName = name1
         playerTwoName = name2
-        updatePlayerScore()
         updatePlayerTurnDisplay()
     }
 
+    
     
 
 }
