@@ -43,6 +43,7 @@ class SettingsViewController: UIViewController {
     
     @IBAction func singlePlayerSwitch(_ sender: Any) {
         singlePlayerSwitchTrigger()
+        
     }
     
     func updateNames(){
@@ -51,7 +52,7 @@ class SettingsViewController: UIViewController {
     }
     
     func singlePlayerSwitchTrigger(){
-        var randomName = generateRandomName()
+        let randomName = generateRandomName()
         
         if singlePlayerSwitchOutlet.isOn {
             playerTwoName = randomName
