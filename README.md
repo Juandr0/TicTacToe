@@ -1,7 +1,5 @@
 # TicTacToe
 Examining assignment, IOS Development.
-
-by: Alexander Carlsson
        
 ## Screenshots
 
