@@ -55,11 +55,8 @@ class Game {
         }
         
     }
-    
-    //re-initiates the default coordinates list
-    func resetGame (){
-        startGame()
-    }
+
+
     
     //Checks what player turn it is and displays the X/O according to the playerturn on click
     //If the button title is not any of the grid-coordinates it will only check if the game is over.

@@ -9,6 +9,9 @@ import UIKit
 
 
 class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIAlertViewDelegate {
+    
+
+    
 
     
     
@@ -282,7 +285,11 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIA
         updatePlayerTurnDisplay()
     }
 
-    
+    func restartGameFromSettings() {
+        ticTacToe.restartGame()
+        resetBoard()
+        updatePlayerTurnDisplay()
+    }
     
 
 }

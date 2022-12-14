@@ -9,6 +9,7 @@ import UIKit
 
 protocol ClassSettingsViewControllerDelegate : AnyObject {
     func updatePlayerNames(name1 : String, name2 : String)
+    func restartGameFromSettings()
 }
 
 class SettingsViewController: UIViewController {
@@ -43,13 +44,14 @@ class SettingsViewController: UIViewController {
     
     @IBAction func singlePlayerSwitch(_ sender: Any) {
         singlePlayerSwitchTrigger()
-        
+        delegate?.restartGameFromSettings() 
     }
     
     func updateNames(){
         delegate?.updatePlayerNames(name1: playerOneNameTextField.text ?? "Player 1",
                                     name2: playerTwoNameTextField.text ?? "Player 2")
     }
+    
     
     func singlePlayerSwitchTrigger(){
         let randomName = generateRandomName()
