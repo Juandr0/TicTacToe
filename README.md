@@ -1,5 +1,5 @@
 # TicTacToe
-Examining assignment, IOS Development.
+Examining schoolassignment, IOS Development.
        
 ## Screenshots
 
