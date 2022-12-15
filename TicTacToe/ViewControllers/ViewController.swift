@@ -288,6 +288,7 @@ class ViewController: UIViewController, ClassSettingsViewControllerDelegate, UIA
     func restartGameFromSettings() {
         ticTacToe.restartGame()
         resetBoard()
+        ticTacToe.resetPlayerScores()
         updatePlayerTurnDisplay()
     }
     
