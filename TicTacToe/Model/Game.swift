@@ -55,11 +55,8 @@ class Game {
         }
         
     }
-    
-    //re-initiates the default coordinates list
-    func resetGame (){
-        startGame()
-    }
+
+
     
     //Checks what player turn it is and displays the X/O according to the playerturn on click
     //If the button title is not any of the grid-coordinates it will only check if the game is over.
@@ -130,6 +127,7 @@ class Game {
     //If boolean singleplayermode is true the game will run playerTwo's
     //turn directly after player one is finished with a randomly generated-
     //coordinate, hence two turns will run at once if in singleplayermode.
+    
     
     open func placeOnBoard(ViewButtonId : Int) -> Bool{
         
@@ -277,7 +275,6 @@ class Game {
         
         if emptySpaces.isEmpty == false{
             let randomNumber = Int.random(in: 0..<emptySpaces.count)
-            print (emptySpaces[randomNumber])
             latestRandomCoordinate = emptySpaces[randomNumber]
             return emptySpaces[randomNumber]
         }
@@ -293,6 +290,12 @@ class Game {
     //When turned off, the single player mode is turned off
     open func singlePlayerOnOff(on : Bool){
         singlePlayerActivated = on
+    }
+    
+    //Resets the player score
+    open func resetPlayerScores(){
+        player1Score = 0
+        player2Score = 0
     }
 }
 
